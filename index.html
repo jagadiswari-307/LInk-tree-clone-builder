@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkTree Clone Builder</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff0080,#7928ca,#00c6ff);
+min-height:100vh;
+padding:30px;
+}
+
+.container{
+display:flex;
+gap:30px;
+flex-wrap:wrap;
+justify-content:center;
+align-items:flex-start;
+}
+
+.phone{
+width:320px;
+background:white;
+border-radius:30px;
+padding:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.profile{
+width:120px;
+height:120px;
+border-radius:50%;
+background:linear-gradient(45deg,#ff0080,#7928ca);
+margin:auto;
+margin-bottom:15px;
+}
+
+.phone h2{
+margin-bottom:10px;
+}
+
+.link-btn{
+display:block;
+background:linear-gradient(45deg,#ff0080,#7928ca);
+color:white;
+padding:15px;
+margin:12px 0;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.link-btn:hover{
+transform:scale(1.05);
+}
+
+.dashboard{
+width:700px;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:20px;
+color:white;
+}
+
+.title{
+text-align:center;
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:25px;
+}
+
+.card{
+background:rgba(255,255,255,.15);
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.card h3{
+font-size:28px;
+margin-top:10px;
+}
+
+.form{
+background:rgba(255,255,255,.1);
+padding:20px;
+border-radius:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#ff0080;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#e60073;
+}
+
+.manage-links{
+margin-top:20px;
+}
+
+.link-item{
+background:rgba(255,255,255,.15);
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.delete-btn{
+background:red;
+padding:5px 10px;
+border:none;
+border-radius:5px;
+color:white;
+cursor:pointer;
+}
+
+@media(max-width:900px){
+.dashboard{
+width:100%;
+}
+.cards{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="phone">
+
+<div class="profile"></div>
+
+<h2 id="username">Jagadiswari</h2>
+<p>Content Creator</p>
+
+<div id="previewLinks">
+<a class="https://www.youtube.com/">Youtube</a>
+<a class="https://in.pinterest.com/">Pinterest</a>
+<a class="https://abhyas.ai/beta/#/student">Abhyas</a>
+<a class="https://www.canva.com/">Canva</a>
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<h1 class="title">🚀 LinkTree Clone Builder</h1>
+
+<div class="cards">
+<div class="card">
+Total Links
+<h3 id="totalLinks">2</h3>
+</div>
+
+<div class="card">
+Clicks
+<h3>1.2K</h3>
+</div>
+
+<div class="card">
+Visitors
+<h3>842</h3>
+</div>
+</div>
+
+<div class="form">
+<h2>Add New Link</h2>
+
+<input type="text" id="title" placeholder="Link Title">
+
+<input type="url" id="url" placeholder="Link URL">
+
+<button onclick="addLink()">Add Link</button>
+</div>
+
+<div class="manage-links">
+<h2>Your Links</h2>
+<div id="linkList"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let count = 2;
+
+function addLink(){
+
+let title = document.getElementById("title").value;
+let url = document.getElementById("url").value;
+
+if(title === "" || url === ""){
+alert("Fill all fields");
+return;
+}
+
+count++;
+
+document.getElementById("totalLinks").innerText = count;
+
+let preview = document.getElementById("previewLinks");
+
+let newLink = document.createElement("a");
+newLink.className = "link-btn";
+newLink.href = url;
+newLink.target = "_blank";
+newLink.innerText = title;
+
+preview.appendChild(newLink);
+
+let list = document.getElementById("linkList");
+
+let item = document.createElement("div");
+item.className = "link-item";
+
+item.innerHTML = `
+<span>${title}</span>
+<button class="delete-btn">Delete</button>
+`;
+
+item.querySelector("button").onclick = function(){
+item.remove();
+newLink.remove();
+count--;
+document.getElementById("totalLinks").innerText = count;
+};
+
+list.appendChild(item);
+
+document.getElementById("title").value="";
+document.getElementById("url").value="";
+}
+
+</script>
+
+</body>
+</html>
